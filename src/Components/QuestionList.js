@@ -1,47 +1,60 @@
+
 import React, { useState } from 'react';
+import QuestionForm from "./QuestionForm";
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import ListItem from '@material-ui/core/ListItem'
+import { IconButton, ListItemText } from '@material-ui/core';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AnswerForm from './AnswerForm';
-import AnswerList from './AnswerList';
+import DeleteIcon from '@material-ui/icons/Delete'
+
+const QuestionList = () => {
+
+    const [questions, setQuestions] = useState([]);
+
+    const addQuestion = text => setQuestions([...questions, { text }]);
+
+    const toggleQuestions = index => {
+        const newQuestions = [...questions];
+        newQuestions[index].isCompleted = !newQuestions[index].isCompleted;
+        setQuestions(newQuestions);
+    };
+
+    const removeQuestions = index => {
+        const newQuestions = [...questions];
+        newQuestions.splice(index, 1);
+        setQuestions(newQuestions);
+    };
+
+    return (
+        <div>
+            {questions.map((question, index) => (
+                <List>
+                    <span onClick={() => toggleQuestions(index)}>
+
+                        <ListItem key={index.toString()}>
+                            <ListItemText primary={question.text}>
+
+                            </ListItemText>
+                            <ListItemSecondaryAction>
+
+                                <IconButton
+                                    aria-label="Delete"
+                                    onClick={() => {
+                                        removeQuestions(index);
+                                    }}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    </span>
 
 
-
-
-
-const QuestionList = ({ questions, deleteQuestions }) => (
-
-
-    <List>
-
-        {questions.map((question, index) => (
-            <ListItem key={index.toString()} dense button>
-                <Checkbox tabIndex={-1} disableRipple />
-                <ListItemText primary={question} />
-                {/* <AnswerForm>
-                    <AnswerList>
-
-                    </AnswerList>
-                </AnswerForm> */}
-                <ListItemSecondaryAction>
-
-                    <IconButton
-                        aria-label="Delete"
-                        onClick={() => {
-                            deleteQuestions(index);
-                        }}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>
-            </ListItem>
-        ))}
-
-    </List>
-);
+                </List>
+            ))}
+            <QuestionForm addQuestion={addQuestion} />
+        </div>
+    );
+}
 
 export default QuestionList;

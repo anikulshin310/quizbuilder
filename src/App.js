@@ -1,16 +1,21 @@
 import React from 'react';
+import Container from '@material-ui/core/Container'
 
 import './App.css';
-import MainField from './Components/MainField';
+
+import QuestionList from './Components/QuestionList';
+
 
 
 function App() {
-  
+
   return (
     <div>
-      <MainField>
+      <Container maxWidth="sm">
+        <QuestionList></QuestionList>
 
-      </MainField>
+      </Container>
+
     </div>
   );
 }

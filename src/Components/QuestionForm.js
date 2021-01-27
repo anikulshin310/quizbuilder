@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField'
 
-const QuestionForm = ({ saveQuestion }) => {
-  const [value, setValue] = useState('')
-  return (
-    <form
-      onSubmit={event => {
-        event.preventDefault();
-        saveQuestion(value);
-        setValue('')
-    
-      }}>
-      <TextField
-        variant="outlined"
-        placeholder="Add question"
-        onChange={event => {
-          setValue(event.target.value);
+const QuestionForm = ({ addQuestion }) => {
+    const [value, setValue] = useState("");
 
-        }}
-        value={value}
-      ></TextField>
-    </form>
+    const handleSubmit = e => {
+        e.preventDefault();
+        value && addQuestion(value)
+        setValue("");
+    };
 
-  );
-};
+    return (
+        <div><form onSubmit={handleSubmit}>
+            <TextField
+                variant="outlined"
+                type="text"
+                value={value}
+                placeholder="Set question"
+                onChange={e => setValue(e.target.value)}
+            />
+            <button type="submit"><i>set</i></button>
+        </form>
+        </div>
+    );
+}
 
 
-export default QuestionForm;
+export default QuestionForm
