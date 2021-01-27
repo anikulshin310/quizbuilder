@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import InputForm from "./InputForm";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
+
+import AnswerList from './AnswerList'
 
 
 
@@ -11,15 +12,9 @@ import AddIcon from '@material-ui/icons/Add';
 const QuestionList = () => {
 
     const [questions, setQuestions] = useState([]);
-    const [answer, setAnswer] = useState([])
+    const addQuestion = (text, id) => setQuestions([...questions, {text} ]);
 
-    const addQuestion = (text) => setQuestions([...questions, { text }]);
-    const addAnswer = (text) => setAnswer([...answer, { text }]);
-    const toggleQuestions = index => {
-        const newQuestions = [...questions];
-        newQuestions[index].isCompleted = !newQuestions[index].isCompleted;
-        setQuestions(newQuestions);
-    };
+   
 
     const removeQuestions = index => {
         const newQuestions = [...questions];
@@ -31,29 +26,30 @@ const QuestionList = () => {
         <div>
 
             {questions.map((question, index) => (
-                <List>
-                    <span onClick={() => toggleQuestions(index)}>
+                <List key={index.toString()} >
 
-                        <ListItem key={index.toString()}>
-                            <ListItemText primary={question.text}>
-                            </ListItemText>
-                        </ListItem>
-                    </span>
+
+                    <ListItem >
+                        <ListItemText primary={question.text}>
+                        </ListItemText>
+                    </ListItem>
+
                     <ListItemSecondaryAction>
                         <IconButton onClick={() => removeQuestions(index)}>
                             <DeleteIcon></DeleteIcon>
                         </IconButton>
-                        <IconButton>
-                            <AddIcon></AddIcon>
-                        </IconButton>
+
+
                     </ListItemSecondaryAction>
+                    <AnswerList></AnswerList>
+
 
 
 
                 </List>
             ))}
-            <InputForm id='1' addFromInput={addQuestion} />
-            <InputForm id='2'addFromInput={addAnswer} />
+            <InputForm placeholder="Set question" addFromInput={addQuestion} />
+<button onClick={()=> {console.log(questions)}}></button>
         </div>
     );
 }

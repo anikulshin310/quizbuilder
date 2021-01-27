@@ -3,17 +3,18 @@ import React, { useState } from 'react';
 import { IconButton, List, ListItem, ListItemSecondaryAction, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-const QuestionForm = ({ addFromInput, id }) => {
+const QuestionForm = ({ addFromInput, placeholder }) => {
     const [value, setValue] = useState("");
 
     const handleSubmit = e => {
+
         e.preventDefault();
         value && addFromInput(value);
         setValue("");
     };
 
     return (
-        <div><form id={id} onSubmit={handleSubmit}>
+        <div><form  onSubmit={handleSubmit}>
             <List>
                 <ListItem>
                     <TextField
@@ -21,14 +22,14 @@ const QuestionForm = ({ addFromInput, id }) => {
                         variant="outlined"
                         type="text"
                         value={value}
-                        placeholder="Set question"
+                        placeholder={placeholder}
                         onChange={e => setValue(e.target.value)}
                     >
 
                     </TextField>
                 </ListItem>
                 <ListItemSecondaryAction>
-                    <IconButton id={id} type="submit">
+                    <IconButton type="submit">
                         <AddIcon></AddIcon>
                     </IconButton>
 
