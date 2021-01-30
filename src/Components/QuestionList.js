@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import InputForm from "./InputForm";
-import { Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import { Typography,Container, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AnswerList from './AnswerList'
 
@@ -16,14 +16,17 @@ const QuestionList = () => {
     };
 
     return (
-        <div >
+        <Container maxWidth="sm">
+            <Typography align="center" variant="h2" component="h2">
+                Quiz Builder
+</Typography>
 
             {questions.map((question, index) => (
 
-                <List key={index.toString()} >
+                <List dense key={index.toString()} >
 
                     <Divider></Divider>
-                    <ListItem style={{  borderRadius: 10 }}>
+                    <ListItem style={{ borderRadius: 10 }}>
                         <ListItemText primary={question.text}>
                         </ListItemText>
                         <ListItemSecondaryAction>
@@ -46,7 +49,7 @@ const QuestionList = () => {
             ))}
             <InputForm placeholder="Set question" addFromInput={addQuestion} />
 
-        </div>
+        </Container>
     );
 }
 

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import InputForm from './InputForm'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { ListItem, ListItemSecondaryAction } from '@material-ui/core';
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+import { Typography, ListItem, ListItemSecondaryAction, Box, ListItemText } from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 
 
@@ -15,9 +16,9 @@ const AnswerList = (question) => {
     const [correctAnswers, setCorrectAnswers] = useState([]);
     const addCorrectAnswer = (text) => setCorrectAnswers([...correctAnswers, text]);
     const qa = {
-        question:question.question.text,
-        answers:answers,
-        correctAnswers:correctAnswers
+        question: question.question.text,
+        answers: answers,
+        correctAnswers: correctAnswers
     }
 
 
@@ -28,12 +29,14 @@ const AnswerList = (question) => {
             const newCorrectAnswers = [...correctAnswers];
             newCorrectAnswers.splice(correctAnswers.indexOf(e.target.value), 1);
             setCorrectAnswers(newCorrectAnswers);
-            
+
+
 
         }
         else {
 
             addCorrectAnswer(e.target.value)
+
         }
 
     }
@@ -52,18 +55,18 @@ const AnswerList = (question) => {
         <div style={{ marginLeft: 50 }}>
 
             {answers.map((answer, index) => (
-                <ListItem onChange={console.log(qa)} divider key={index.toString()}>
+                <ListItem multiline onChange={console.log(qa)} divider key={index.toString()}>
 
                     <FormControlLabel
 
                         control={<Checkbox onChange={handleChange} color="primary" value={answer} />}
 
 
-                        label={answer}
+
                     >
 
                     </FormControlLabel>
-
+                    <ListItemText primary={answer}></ListItemText>
                     <ListItemSecondaryAction>
                         <IconButton onClick={() => removeAnswers(index)}>
                             <DeleteIcon></DeleteIcon>
@@ -72,6 +75,7 @@ const AnswerList = (question) => {
 
 
                 </ListItem>
+
             ))}
 
             <InputForm placeholder="Set answer" addFromInput={addAnswer} />

@@ -32,11 +32,7 @@ const QuestionForm = ({ addFromInput, placeholder }) => {
                 >
 
                 </TextField>
-                {/* <ListItemSecondaryAction>
-                    <IconButton onClick={handleSubmit}>
-                        <AddIcon></AddIcon>
-                    </IconButton>
-                </ListItemSecondaryAction> */}
+               
             </ListItem>
 
 
