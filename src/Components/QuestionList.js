@@ -1,21 +1,14 @@
 
 import React, { useState } from 'react';
 import InputForm from "./InputForm";
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import { Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import AnswerList from './AnswerList'
-
-
-
 
 const QuestionList = () => {
 
     const [questions, setQuestions] = useState([]);
-    const addQuestion = (text, id) => setQuestions([...questions, {text} ]);
-
-   
-
+    const addQuestion = (text) => setQuestions([...questions, { text }]);
     const removeQuestions = index => {
         const newQuestions = [...questions];
         newQuestions.splice(index, 1);
@@ -23,33 +16,36 @@ const QuestionList = () => {
     };
 
     return (
-        <div>
+        <div >
 
             {questions.map((question, index) => (
+
                 <List key={index.toString()} >
 
-
-                    <ListItem >
+                    <Divider></Divider>
+                    <ListItem style={{  borderRadius: 10 }}>
                         <ListItemText primary={question.text}>
                         </ListItemText>
+                        <ListItemSecondaryAction>
+                            <IconButton onClick={() => removeQuestions(index)}>
+                                <DeleteIcon></DeleteIcon>
+                            </IconButton>
+
+
+                        </ListItemSecondaryAction>
                     </ListItem>
 
-                    <ListItemSecondaryAction>
-                        <IconButton onClick={() => removeQuestions(index)}>
-                            <DeleteIcon></DeleteIcon>
-                        </IconButton>
 
-
-                    </ListItemSecondaryAction>
-                    <AnswerList></AnswerList>
+                    <AnswerList question={question} ></AnswerList>
 
 
 
 
                 </List>
+
             ))}
             <InputForm placeholder="Set question" addFromInput={addQuestion} />
-<button onClick={()=> {console.log(questions)}}></button>
+
         </div>
     );
 }

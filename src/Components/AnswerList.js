@@ -1,46 +1,82 @@
 import React, { useState } from 'react';
-
 import InputForm from './InputForm'
-import Answer from './Answer';
-
-import FormGroup from '@material-ui/core/FormGroup';
 import IconButton from '@material-ui/core/IconButton'
-import FormControl from '@material-ui/core/FormControl';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { ListItem, ListItemSecondaryAction } from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 
 
 
 
 
-const AnswerList = () => {
-    const [answers, setAnswers] = useState([])
-    const addAnswer = (text) => setAnswers([...answers, { text }]);
+const AnswerList = (question) => {
+    const [answers, setAnswers] = useState([]);
+    const [correctAnswers, setCorrectAnswers] = useState([]);
+    const addCorrectAnswer = (text) => setCorrectAnswers([...correctAnswers, text]);
+    const qa = {
+        question:question.question.text,
+        answers:answers,
+        correctAnswers:correctAnswers
+    }
+
+
+    function handleChange(e) {
+
+        if (!e.target.checked) {
+            correctAnswers.indexOf(e.target.value)
+            const newCorrectAnswers = [...correctAnswers];
+            newCorrectAnswers.splice(correctAnswers.indexOf(e.target.value), 1);
+            setCorrectAnswers(newCorrectAnswers);
+            
+
+        }
+        else {
+
+            addCorrectAnswer(e.target.value)
+        }
+
+    }
+
+    const addAnswer = (text) => setAnswers([...answers, text.toString()]);
+
     const removeAnswers = index => {
         const newAnswers = [...answers];
         newAnswers.splice(index, 1);
         setAnswers(newAnswers);
     };
 
+
+
     return (
-        <div>
-            <FormControl component="fieldset">
-                <FormGroup>
-                    {answers.map((answer, index) => (
+        <div style={{ marginLeft: 50 }}>
 
-                        <div key={index.toString()}>
-                            <Answer answerText={answer.text} >
-                            </Answer>
-                            <IconButton onClick={() => removeAnswers(index)}>
-                                <DeleteIcon></DeleteIcon>
-                            </IconButton>
-                        </div>
+            {answers.map((answer, index) => (
+                <ListItem onChange={console.log(qa)} divider key={index.toString()}>
 
-                    ))}
+                    <FormControlLabel
 
-                    <InputForm  placeholder="Set answer" addFromInput={addAnswer} />
-                </FormGroup>
-            </FormControl>
-            <button onClick={()=>{console.log(answers)}}>+</button>
+                        control={<Checkbox onChange={handleChange} color="primary" value={answer} />}
+
+
+                        label={answer}
+                    >
+
+                    </FormControlLabel>
+
+                    <ListItemSecondaryAction>
+                        <IconButton onClick={() => removeAnswers(index)}>
+                            <DeleteIcon></DeleteIcon>
+                        </IconButton>
+                    </ListItemSecondaryAction>
+
+
+                </ListItem>
+            ))}
+
+            <InputForm placeholder="Set answer" addFromInput={addAnswer} />
+
+
         </div >
     )
 };
